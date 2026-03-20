@@ -35,3 +35,7 @@ def download_file(service, file_id, filename):
 
     fh.close()
     return path
+
+
+def delete_file(filename) -> None:
+    os.remove(filename)

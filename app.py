@@ -1,10 +1,10 @@
 from dotenv import load_dotenv
-
+import time
 from variables import *
 from db.init_db import init_db
 from db.mark_sent import mark_sent
 from utils.sanitize_filename import sanitize_filename
-from services.get_data_drive import list_new_files, download_file
+from services.get_data_drive import list_new_files, download_file, delete_file
 from config.config_google_auth import get_drive_service
 from services.send_to_kindle import send_to_kindle
 
@@ -31,6 +31,8 @@ def run_once():
         send_to_kindle(local_path, clean_name, f["mimeType"])
         mark_sent(conn, f["id"], f["name"])
         print(f"Enviado e registrado: {f['name']}")
+        time.sleep(5)
+        delete_file(local_path)
 
     conn.close()
     return
